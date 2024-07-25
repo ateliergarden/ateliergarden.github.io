@@ -72,8 +72,10 @@
         miniSearch.addAll(documents)
 
         // Add callback for key-up
-        document.getElementById("q").addEventListener("keyup", function (e) {
-            let results = miniSearch.search(document.getElementById("q").value, { prefix: true })
+        const s = document.getElementById("q")
+        s.focus()
+        s.addEventListener("keyup", function (e) {
+            let results = miniSearch.search(s.value, { prefix: true })
             const wrapper = document.getElementById('results')
             wrapper.replaceChildren();
             for (let i in results) {
