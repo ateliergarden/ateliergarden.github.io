@@ -2,7 +2,7 @@
 <html lang="no">
 <head>
     <base href="/demo/">
-    <title>Ipsum - Ateliergården</title>
+    <title>Søk - Ateliergården</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
     <link rel="stylesheet" href="assets/css/main.css"/>
@@ -38,13 +38,53 @@
                     <p>
                         <a href="">Hjem</a> &raquo;
                         
-                        <!-- Ipsum -->
+                        <!--  -->
                     </p>
-                    <h2>Ipsum</h2>
+                    <h2></h2>
                     
-<p>In publishing and graphic design, Lorem ipsum (/ˌlɔː.rəm ˈɪp.səm/) is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is available. It is also used to temporarily replace text in a process called greeking, which allows designers to consider the form of a webpage or publication, without the meaning of the text influencing the design.</p>
-<p>Lorem ipsum is typically a corrupted version of De finibus bonorum et malorum, a 1st-century BC text by the Roman statesman and philosopher Cicero, with words altered, added, and removed to make it nonsensical and improper Latin. The first two words themselves are a truncation of dolorem ipsum ("pain itself").</p>
-<p>Versions of the Lorem ipsum text have been used in typesetting at least since the 1960s, when it was popularized by advertisements for Letraset transfer sheets.[1] Lorem ipsum was introduced to the digital world in the mid-1980s, when Aldus employed it in graphic and word-processing templates for its desktop publishing program PageMaker. Other popular word processors, including Pages and Microsoft Word, have since adopted Lorem ipsum,[2] as have many LaTeX packages,[3][4][5] web content managers such as Joomla! and WordPress, and CSS libraries such as Semantic UI.</p>
+<h2>Søk</h2>
+<label for="q"></label><input type="text" id="q">
+<div id="result_wrapper">
+    <ul id="results">
+
+    </ul>
+</div>
+<script>
+    window.addEventListener('load', function () {
+
+        const documents = [
+        {"id":"finn", "url": "finn", "title": "Finn"},
+        {"id":"bar", "url": "finn/bar", "title": "Bar"},
+        {"id":"baz", "url": "finn/baz", "title": "Baz tittel her"},
+        {"id":"bazzer", "url": "finn/baz/bazzer", "title": "Bazzer tittel her"},
+        {"id":"foo", "url": "finn/foo", "title": "Foo"},
+        {"id":"huset", "url": "huset", "title": "Huset"},
+        {"id":"ipsum", "url": "ipsum", "title": "Ipsum"},
+        {"id":"markus", "url": "markus", "title": "Markus"},
+        ]
+
+        const miniSearch = new MiniSearch({
+            fields: ['title', 'tags'], // fields to index for full-text search
+            storeFields: ['title', 'url'] // fields to return with search results
+        })
+
+        // Index all documents
+        miniSearch.addAll(documents)
+
+        // Add callback for key-up
+        document.getElementById("q").addEventListener("keyup", function (e) {
+            let results = miniSearch.search(document.getElementById("q").value, { prefix: true })
+            const wrapper = document.getElementById('results')
+            wrapper.replaceChildren();
+            for (let i in results) {
+                const elem = document.createElement('li');
+                elem.innerHTML = '<a href="' + results[i].url + '">' + results[i].title +'</a>';
+                wrapper.append(elem);
+            }
+            console.info(results);
+        })
+    });
+</script>
 
                 </div>
             </div>
