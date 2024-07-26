@@ -38,20 +38,19 @@
                     <p>
                         <a href="">Hjem</a> &raquo;
                         
-                        <!--  -->
                     </p>
-                    <h2></h2>
                     
 <h2>Søk</h2>
 <label for="q"></label><input type="text" id="q">
 <div id="result_wrapper">
     <ul id="results">
-
+        <li>Skriv i søkefeltet for å begynne</li>
     </ul>
 </div>
 <script>
     window.addEventListener('load', function () {
 
+        // @formatter:off
         const documents = [
         {"id":"finn", "url": "finn", "title": "Finn"},
         {"id":"bar", "url": "finn/bar", "title": "Bar"},
@@ -61,29 +60,49 @@
         {"id":"huset", "url": "huset", "title": "Huset"},
         {"id":"ipsum", "url": "ipsum", "title": "Ipsum"},
         {"id":"markus", "url": "markus", "title": "Markus"},
+        {"id":"gaming", "url": "markus/gaming", "title": "Gaming"},
         ]
+        // @formatter:on
 
         const miniSearch = new MiniSearch({
             fields: ['title', 'tags'], // fields to index for full-text search
-            storeFields: ['title', 'url'] // fields to return with search results
+            storeFields: ['title', 'url'], // fields to return with search results
+            searchOptions: {
+                boost: {title: 2},
+                fuzzy: 0.1,
+                prefix: true
+            }
         })
 
         // Index all documents
         miniSearch.addAll(documents)
 
+        const wrapper = document.getElementById('results')
+
+        function addResultRow(s) {
+            const elem = document.createElement('li');
+            elem.innerHTML = s
+            wrapper.append(elem);
+        }
+
         // Add callback for key-up
         const s = document.getElementById("q")
         s.focus()
         s.addEventListener("keyup", function (e) {
-            let results = miniSearch.search(s.value, { prefix: true })
-            const wrapper = document.getElementById('results')
+            let results = miniSearch.search(s.value)
+
             wrapper.replaceChildren();
             for (let i in results) {
-                const elem = document.createElement('li');
-                elem.innerHTML = '<a href="' + results[i].url + '">' + results[i].title +'</a>';
-                wrapper.append(elem);
+                addResultRow('<a href="' + results[i].url + '">' + results[i].title + '</a>');
             }
-            console.info(results);
+
+            if (!s.value && results.length === 0) {
+                addResultRow('Skriv i søkefeltet for å begynne')
+            } else if (results.length === 0) {
+                addResultRow('Ingen treff for ' + s.value)
+            } else {
+                //addResultRow(results.length + ' treff for ' + s.value)
+            }
         })
     });
 </script>
@@ -102,7 +121,7 @@
                     
                 </div>
                 <div class="col-6 col-12-medium imp-medium">
-                    <!-- Blurb -->
+                    <!--
                     <section>
                         <h2>An Informative Text Blurb</h2>
                         <p>
@@ -112,7 +131,7 @@
                             lorem ipsum amet dolor sit amet lorem ipsum consequat gravida justo mollis.
                         </p>
                     </section>
-
+                    -->
                 </div>
             </div>
         </div>
