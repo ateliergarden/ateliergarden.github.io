@@ -1,11 +1,11 @@
 @import url("https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,300,200");
 
 #result_wrapper {
-    margin-top:1.6em;
+    margin-top: 1.6em;
 }
 
 #q {
-    width:80%;
+    width: 80%;
 }
 
 .page-meta-info {
@@ -27,8 +27,7 @@ pre, a, abbr, acronym, address, big, cite,
 code, del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var, b,
 u, i, center, dl, dt, dd, ol, ul, li, fieldset,
-form, label, legend, table, caption, tbody,
-tfoot, thead, tr, th, td, article, aside,
+form, label, legend, caption, article, aside,
 canvas, details, embed, figure, figcaption,
 footer, header, hgroup, menu, nav, output, ruby,
 section, summary, time, mark, audio, video {
@@ -70,6 +69,14 @@ blockquote:before, blockquote:after, q:before, q:after {
 table {
     border-collapse: collapse;
     border-spacing: 0;
+    border: 1px solid #999;
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+}
+
+th, td {
+    border: 1px solid #999;
+    padding: 0.4em;
 }
 
 body {
